@@ -14,7 +14,6 @@ function inserir(req, res) {
       res.status(201).json({msg:'Inserido com sucesso!'})
     }
     catch(err) {
-      //id-> 400 / msg -> msg de erro
       res.status(err.id).json({msg: err.message});
     }
 }
@@ -26,7 +25,6 @@ function buscarPorId(req, res) {
       res.json(livro);
     }
     catch(err) {
-      //id-> 404 / msg -> msg de erro
       res.status(err.id).json({msg: err.message});
     }
 }
