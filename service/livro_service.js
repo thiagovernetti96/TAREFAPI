@@ -1,4 +1,4 @@
-const livroRepository = require('../repository/produto_repository')
+const livroRepository = require('../repository/livro_repository');
 
 
 function listar() {
@@ -6,7 +6,7 @@ function listar() {
 }
 
 function inserir(livro) {
-    if(livro && livro.nome && livro.ano && livro.editora && livro.autor) {// produto != undefined
+    if(livro && livro.nome && livro.ano && livro.editora && livro.autor) {// livro != undefined
         livroRepository.inserir(livro);
     }
     else {
