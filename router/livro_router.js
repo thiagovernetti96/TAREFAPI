@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const livroController = require('./controller/livro_controller')
+const livroController = require('../controller/livro_controller')
 
 //router: /api/livros
 router.get('/', livroController.listar);
