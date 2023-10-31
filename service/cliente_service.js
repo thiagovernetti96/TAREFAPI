@@ -7,7 +7,7 @@ function listar(){
 
 function inserir(cliente){
   if(cliente && cliente.nome && cliente.matricula && cliente.telefone)
-    cliente_Repository.inserir(cliente)
+    clienteRepository.inserir(cliente)
   else {
     throw {id:400, message:"Cliente nao possui um dos campos"};
 }
