@@ -53,8 +53,17 @@ function deletar(req, res) {
   }   
 }
 
+function pegarLivro(req, res) {
+  const clienteId = +req.params.id;
+  const livroId = +req.params.livroId;
 
-
+  try {
+    clienteService.retirarLivro(clienteId, livroId);
+    res.json({ msg: "Livro retirado com sucesso" });
+  } catch (err) {
+    res.status(err.id).json({ msg: err.message });
+  }
+}
 
 
 module.exports = {
@@ -62,5 +71,6 @@ module.exports = {
   inserir,
   buscarPorId,
   atualizar,
-  deletar
+  deletar,
+  pegarLivro
 }

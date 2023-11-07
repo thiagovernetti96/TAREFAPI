@@ -48,6 +48,27 @@ function deletar(id){
   }
 }
 
+function pegarLivro(clienteId, livroId) {
+  const cliente = listaClientes.find((cliente) => cliente.id === clienteId);
+
+  if (cliente) {
+    if (!cliente.livrosRetirados) {
+      cliente.livrosRetirados = [];
+    }
+    if (cliente.livrosRetirados.length < 3) {
+      if (!cliente.livrosRetirados.includes(livroId)) {
+        cliente.livrosRetirados.push(livroId);
+        return "Livro retirado com sucesso";
+      } else {
+        throw { id: 400, message: "Este livro já foi retirado pelo cliente." };
+      }
+    } else {
+      throw { id: 400, message: "Limite de retirada de livros excedido." };
+    }
+  } else {
+    throw { id: 404, message: "Cliente não encontrado." };
+  }
+}
 
 module.exports = {
   listar,
@@ -55,5 +76,6 @@ module.exports = {
   buscarPorId,
   atualizar,
   deletar,
-  pesquisarPorLikeNome
+  pesquisarPorLikeNome,
+  pegarLivro
 }

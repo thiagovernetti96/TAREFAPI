@@ -1,17 +1,27 @@
 const clienteRepository = require('../repository/cliente_repository');
 
+
+const clientes = [];
+const livroRepository = require('../repository/livro_repository')
+
 function listar(){
   return clienteRepository.listar();
 }
 
 
-function inserir(cliente){
-  if(cliente && cliente.nome && cliente.matricula && cliente.telefone)
-    clienteRepository.inserir(cliente)
-  else {
-    throw {id:400, message:"Cliente nao possui um dos campos"};
+
+
+
+
+function inserir(cliente) {
+  if (cliente && cliente.nome && cliente.matricula && cliente.telefone) {
+    clienteRepository.inserir(cliente);
+    clientes.push(cliente);
+  } else {
+    throw { id: 400, message: "Cliente não possui um dos campos" };
+  }
 }
-}
+
 
 
 function buscarPorId(id){
@@ -50,6 +60,30 @@ function deletar(id){
 }
 
 
+function pegarLivro (clienteId, livroId) {
+  const cliente = clienteRepository.buscarPorId(clienteId);
+  const livro = livroRepository.buscarPorId(livroId);
+
+  if (cliente && livro) {
+    if (!cliente.livrosRetirados) {
+      cliente.livrosRetirados = [];
+    }
+    if (cliente.livrosRetirados.length < 3) {
+      if (!cliente.livrosRetirados.includes(livro.id)) {
+        cliente.livrosRetirados.push(livro.id);
+        livroRepository.retirarLivro(livro.id);
+        return `Livro ${livro.titulo} foi retirado com sucesso.`;
+      } else {
+        throw { id: 400, message: "Este livro já foi retirado pelo cliente." };
+      }
+    } else {
+      throw { id: 400, message: "Limite de retirada de livros excedido." };
+    }
+  } else {
+    throw { id: 404, message: "Cliente ou livro não encontrado." };
+  }
+}
+
 
 
 module.exports = {
@@ -57,5 +91,6 @@ module.exports = {
   inserir,
   buscarPorId,
   atualizar,
-  deletar
+  deletar,
+  pegarLivro
 }
